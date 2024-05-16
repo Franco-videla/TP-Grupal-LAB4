@@ -5,17 +5,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: 'Helvetica', sans-serif; 
 }
 .modalContainerContent {
   width: 60vw;
   height: 85vh;
   overflow-y: auto;
   border-radius: 0.4rem;
-  background-color: #fff;
+  background-color: #e0ebc2;
+  color: #a6c732; 
   display: flex;
   flex-direction: column;
   position: relative;
 }
+
 .productContainer {
   display: flex;
   flex-direction: column;
@@ -24,11 +27,13 @@
   gap: 2vh;
   width: 100%;
 }
+
 .productContainerInputs {
   display: flex;
   flex-direction: column;
   width: 90%;
 }
+
 .ingredientesTableContainer {
   display: flex;
   flex-direction: column;
@@ -38,6 +43,7 @@
   width: 100%;
   margin-bottom: 4vh;
 }
+
 .ingredientesTableContainerItem {
   display: flex;
   flex-direction: column;
