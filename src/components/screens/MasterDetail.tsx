@@ -96,7 +96,7 @@ export const MasterDetail = () => {
       <NavBar />
       <div
         style={{
-          height: "6vh",
+          height: "10vh",
           width: "100%",
           display: "flex",
           justifyContent: "flex-end",
@@ -109,10 +109,11 @@ export const MasterDetail = () => {
             padding: ".4rem",
           }}
         >
-          <Button
+          <Button className="custom-button"
             variant="contained"
             color="primary"
             onClick={() => {
+              
               setOpenModal(true);
             }}
           >

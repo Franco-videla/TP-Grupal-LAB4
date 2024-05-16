@@ -1,0 +1,53 @@
+
+  
+
+  .navbar-container {
+    width: 100%;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #7cbdc5; /* Dark background color */
+    padding: 15px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.89); /* Subtle shadow for depth */
+  }
+  
+  .navbar-title {
+    font-size: 3rem; /* Larger font size */
+    color: #000000; /* White text color */
+    font-weight: bold;
+    text-transform: uppercase; /* Uppercase text */
+    letter-spacing: 1.5px; /* Spacing between letters */
+  }
+
+  .button-container {
+    display: flex;
+   
+   
+    height: 100vh; /* Ensure the button is centered vertically */
+  }
+  
+  .custom-button {
+    align-items: center;
+    background-color: #7cbdc5; /* Primary color */
+    color: #000000;
+    border: none;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+  
+  .custom-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+  }
+  
+  .custom-button:active {
+    transform: translateY(0); /* Reset transform on click */
+  }
