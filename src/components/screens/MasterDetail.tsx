@@ -1,3 +1,4 @@
+import './customNavBar.css';
 import { useEffect, useState } from "react";
 import { MasterDetailModal } from "../ui/modals/MasterDetailModal/MasterDetailModal";
 import { NavBar } from "../ui/NavBar/NavBar";

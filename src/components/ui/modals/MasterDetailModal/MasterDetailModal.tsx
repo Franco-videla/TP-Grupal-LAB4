@@ -20,6 +20,7 @@ import { removeElementActive } from "../../../../redux/slices/TablaReducer";
 import { InsumoServices } from "../../../../services/InsumosServices";
 import { IProductoManufacturado } from "../../../../types/IProductoManufacturado";
 import { handleSuccess } from "../../../../helpers/alerts";
+import '../../../screens/customNavBar.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
 //valores iniciales del modal
@@ -282,6 +283,7 @@ export const MasterDetailModal: FC<IMasterDetailModal> = ({
                   onChange={handlePropsElementsInputs}
                   value={itemValue.denominacion}
                   variant="filled"
+                 
                 />
                 <TextField
                   type="number"
@@ -291,6 +293,7 @@ export const MasterDetailModal: FC<IMasterDetailModal> = ({
                   label="Precio"
                   variant="filled"
                   defaultValue={0}
+                 
                 />
                 <TextField
                   type="number"
@@ -300,6 +303,7 @@ export const MasterDetailModal: FC<IMasterDetailModal> = ({
                   label="Tiempo estimado de preparacion"
                   variant="filled"
                   defaultValue={0}
+                  
                 />
                 <TextField
                   onChange={handlePropsElementsInputs}
@@ -310,6 +314,7 @@ export const MasterDetailModal: FC<IMasterDetailModal> = ({
                   variant="filled"
                   multiline
                   rows={4}
+                  
                 />
 
                 
@@ -337,6 +342,7 @@ export const MasterDetailModal: FC<IMasterDetailModal> = ({
                   variant="filled"
                   multiline
                   rows={4}
+                
                 />
               </div>
               <div style={{ textAlign: "center" }}>
@@ -389,6 +395,7 @@ export const MasterDetailModal: FC<IMasterDetailModal> = ({
                     value={valueInsumos.ingrediente.unidadMedida.abreviatura}
                     variant="filled"
                     disabled
+                  
                   />
                 )}
                 <TextField
@@ -399,6 +406,7 @@ export const MasterDetailModal: FC<IMasterDetailModal> = ({
                   value={valueInsumos.cantidad}
                   variant="filled"
                   defaultValue={10}
+                  
                 />
                 <Button onClick={handleNewIngredient} variant="text">
                   Añadir
