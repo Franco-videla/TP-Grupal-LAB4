@@ -69,10 +69,10 @@ export const TableGeneric = <T extends { id: any }>({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#f0f0f0", // Fondo gris claro
-        padding: "30px", // Espaciado interno
+        padding: "20px", // Espaciado interno
         borderRadius: "10px", // Bordes redondeados
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)", // Sombra sutil
-        margin: "10px 0" // Margen superior e inferior
+        margin: "5px 0" // Margen superior e inferior
       }}
     >
       {/* Contenedor del componente Paper */}
@@ -85,7 +85,7 @@ export const TableGeneric = <T extends { id: any }>({
             <TableHead>
               <TableRow>
                 {columns.map((column, i: number) => (
-                  <TableCell key={i} align={"center"}>
+                  <TableCell key={i} align={"center"} sx={{ backgroundColor: '#a6c732' }}>
                     {column.label}
                   </TableCell>
                 ))}

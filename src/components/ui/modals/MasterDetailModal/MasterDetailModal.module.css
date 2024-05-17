@@ -1,22 +1,24 @@
 .modalContainer {
   width: 100vw;
   z-index: 200;
-  height: 100vh;
+  height: 105vh;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: 'Helvetica', sans-serif; 
+  
 }
 .modalContainerContent {
-  width: 60vw;
-  height: 85vh;
+  width: 80vw;
+  height: 92vh;
   overflow-y: auto;
-  border-radius: 0.4rem;
-  background-color: #c2dd79;
-  color: #a6c732; 
+  border-radius: 3rem;
+  background-color: #e0ebc2;
+  color: #FFFFBF; 
   display: flex;
   flex-direction: column;
   position: relative;
+
 }
 
 .productContainer {
@@ -26,7 +28,8 @@
   align-items: center;
   gap: 2vh;
   width: 100%;
-  background-color: #c2dd79;
+  background-color: #e0ebc2;
+    color: #FFFFBF; 
 }
 
 .productContainerInputs {
@@ -34,6 +37,7 @@
   flex-direction: column;
   width: 90%;
   background-color: #e0ebc2;
+ 
 }
 
 .ingredientesTableContainer {
@@ -44,6 +48,7 @@
   gap: 2vh;
   width: 100%;
   margin-bottom: 3vh;
+
 }
 
 .ingredientesTableContainerItem {

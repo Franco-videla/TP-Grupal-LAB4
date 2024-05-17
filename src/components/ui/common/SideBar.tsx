@@ -9,7 +9,7 @@ export const SideBar = () => {
 
     return (
         <div>
-            <CSidebar className="border-end d-flex flex-column" style={{ height: '100vh', backgroundColor: '#e2e9d0' }}>
+            <CSidebar className="border-end d-flex flex-column" style={{ height: '100vh',width:'21vh', backgroundColor: '#e2e9d0' }}>
                 <CSidebarNav>
                     <CNavTitle>
                         Menu
@@ -22,7 +22,7 @@ export const SideBar = () => {
                     </CNavItem>
 
                     <CNavItem>
-                        <Link to="/empresas" className="nav-link">
+                        <Link to="/" className="nav-link">
                             <CIcon customClassName="nav-icon" icon={cilFastfood} />
                             Productos Manufacturados
                         </Link>

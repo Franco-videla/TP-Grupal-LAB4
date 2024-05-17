@@ -102,6 +102,7 @@ export const MasterDetail = () => {
           <NavBar />
         </div>
         <div className="content-container">
+        <h1 style={{ textAlign: "center", marginTop: "3rem", marginBottom: "0.1rem" }}>Productos</h1>
           <div
             style={{
               height: "10vh",
@@ -134,12 +135,12 @@ export const MasterDetail = () => {
               </div>
             )}
             <div className="button-container">
-              <Button
+              <Button 
+              style={{ letterSpacing: "1px", fontWeight: "bold" }}
                 className="custom-button"
                 variant="contained"
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                
               >
                 Agregar un producto manufacturado
               </Button>

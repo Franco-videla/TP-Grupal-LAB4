@@ -85,7 +85,7 @@ export const MasterDetailModal: FC<IMasterDetailModal> = ({
     });
   };
 
-  
+
 
   //traemos categorias del apartado comida
   const [categoriaComidas, setcategoriaComidas] = useState<categorias[]>([]);
@@ -253,16 +253,17 @@ export const MasterDetailModal: FC<IMasterDetailModal> = ({
       >
         <div className={styles.modalContainer}>
           <div className={styles.modalContainerContent}>
-            <div style={{ textAlign: "center" }}>
-              <h1>{`${
-                data ? "Editar" : "Crear"
-              } un producto manufacturado`}</h1>
+            <div style={{ textAlign: "center", backgroundColor: "#a6c732" }}>
+              <h1 style={{ letterSpacing: "2px", fontWeight: "bold" }}>{`${data ? "Editar" : "Crear"
+                } un producto`}</h1>
             </div>
 
             <div className={styles.productContainer}>
               <div className={styles.productContainerInputs}>
                 <Select
-                  variant="filled"
+                    
+                  variant="outlined"
+                  
                   value={itemValue.categoria.id}
                   onChange={handleChangeCategorieArticuloManufacturado}
                 >
@@ -276,52 +277,58 @@ export const MasterDetailModal: FC<IMasterDetailModal> = ({
                   ))}
                 </Select>
                 <TextField
+                   style={{padding:"15px" }}
                   label="Nombre"
                   type="text"
                   name="denominacion"
                   onChange={handlePropsElementsInputs}
                   value={itemValue.denominacion}
-                  variant="filled"
-                 
+                  variant="standard"
+
                 />
                 <TextField
+                  style={{padding:"15px" }}
                   type="number"
                   value={itemValue.precioVenta}
                   onChange={handlePropsElementsInputs}
                   name="precioVenta"
                   label="Precio"
-                  variant="filled"
+                  variant="standard"
                   defaultValue={0}
-                 
+
+
                 />
                 <TextField
+                  style={{padding:"15px" }}
                   type="number"
                   onChange={handlePropsElementsInputs}
                   name="tiempoEstimadoMinutos"
                   value={itemValue.tiempoEstimadoMinutos}
                   label="Tiempo estimado de preparacion"
-                  variant="filled"
-                  defaultValue={0}
+                  variant="standard"
                   
+                  defaultValue={0}
+
                 />
                 <TextField
+                   style={{ }}
                   onChange={handlePropsElementsInputs}
                   label="Descripción"
                   type="text"
                   value={itemValue.descripción}
                   name="descripción"
-                  variant="filled"
+                  variant="outlined"
                   multiline
                   rows={4}
-                  
+
                 />
 
-                
+
               </div>
             </div>
             <div>
-              <div style={{ textAlign: "center" }}>
-                <h1>Ingresa la receta</h1>
+              <div style={{ textAlign: "center", backgroundColor: "#a6c732" }}>
+                <h1 style={{ letterSpacing: "2px", fontWeight: "bold" }}>Carga receta</h1>
               </div>
               <div
                 style={{
@@ -332,20 +339,20 @@ export const MasterDetailModal: FC<IMasterDetailModal> = ({
                 }}
               >
                 <TextField
-                  style={{ width: "90%" }}
+                  style={{ width: "90%",height:"110px", alignContent:"center", backgroundColor: "#e0ebc2" }}
                   label="Receta"
                   type="text"
                   value={itemValue.receta}
                   onChange={handlePropsElementsInputs}
                   name="receta"
-                  variant="filled"
+                  variant="outlined"
                   multiline
                   rows={4}
-                
+
                 />
               </div>
-              <div style={{ textAlign: "center" }}>
-                <h1>Ingredientes</h1>
+              <div style={{ textAlign: "center", backgroundColor: "#a6c732" }}>
+                <h1 style={{ letterSpacing: "2px", fontWeight: "bold" }}>Ingredientes</h1>
               </div>
               <div
                 style={{
@@ -356,7 +363,7 @@ export const MasterDetailModal: FC<IMasterDetailModal> = ({
                 }}
               >
                 <Select
-                  variant="filled"
+                 variant="outlined"
                   value={valueInsumos.categoriaInsumo}
                   label="Categoria"
                   onChange={handleChangeinsumosCategories}
@@ -372,7 +379,7 @@ export const MasterDetailModal: FC<IMasterDetailModal> = ({
                 </Select>
 
                 <Select
-                  variant="filled"
+                 variant="outlined"
                   label="Ingrediente"
                   name="Ingrediente"
                   value={valueInsumos.ingrediente.id}
@@ -392,9 +399,9 @@ export const MasterDetailModal: FC<IMasterDetailModal> = ({
                     type="text"
                     label={valueInsumos.ingrediente.unidadMedida.denominacion}
                     value={valueInsumos.ingrediente.unidadMedida.abreviatura}
-                    variant="filled"
+                    variant="outlined"
                     disabled
-                  
+
                   />
                 )}
                 <TextField
@@ -403,11 +410,13 @@ export const MasterDetailModal: FC<IMasterDetailModal> = ({
                   label="IngreseCantidad"
                   onChange={handleAmountInsumoValue}
                   value={valueInsumos.cantidad}
-                  variant="filled"
+                  variant="outlined"
                   defaultValue={10}
-                  
+
                 />
-                <Button onClick={handleNewIngredient} variant="text">
+                <Button 
+                style={{backgroundColor:"#a6c732",color:"#FFFFBF" }}
+                onClick={handleNewIngredient} variant="text">
                   Añadir
                 </Button>
               </div>
@@ -427,15 +436,18 @@ export const MasterDetailModal: FC<IMasterDetailModal> = ({
                 style={{
                   display: "flex",
                   justifyContent: "space-around",
-                  width: "100%",
+                  width: "50%",
                 }}
               >
-                <Button variant="contained" color="error" onClick={handleClose}>
+                <Button
+                 style={{backgroundColor:"#414141",color:"white" }}
+                variant="contained"  onClick={handleClose}>
                   Cerrar Modal
                 </Button>
                 <Button
+                style={{backgroundColor:"#a6c732",color:"#FFFFBF" }}
                   variant="contained"
-                  color="primary"
+                
                   onClick={handleConfirmModal}
                 >
                   Confirmar

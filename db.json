@@ -221,7 +221,7 @@
         "categorias_hijas": null
       },
       "denominacion": "Pizza Hawaiana",
-      "alta": false,
+      "alta": true,
       "precioVenta": 10.99,
       "tiempoEstimadoMinutos": 30,
       "descripción": "La Pizza Hawaiana es una deliciosa combinación de sabores dulces y salados que te transportará a una isla tropical en cada bocado. Con una base de masa de pizza perfectamente horneada, se cubre con salsa de tomate, generosas porciones de mozzarella derretida, jugosas rodajas de piña fresca y trozos de jamón ahumado.",
