@@ -1,11 +1,13 @@
 import './customNavBar.css';
 import { useEffect, useState } from "react";
 import { MasterDetailModal } from "../ui/modals/MasterDetailModal/MasterDetailModal";
-import { NavBar } from "../ui/NavBar/NavBar";
+import { NavBar } from "../ui/common/NavBar";
+import { SideBar } from "../ui/common/SideBar";
 import { TableGeneric } from "../ui/tables/TableGeneric/TableGeneric";
 import { IProductoManufacturado } from "../../types/IProductoManufacturado";
 import { ProductoManufacturadoService } from "../../services/ProductoManufacturadoService";
 import { useAppDispatch } from "../../hooks/redux";
+
 import {
   removeElementActive,
   setDataTable,
@@ -15,7 +17,7 @@ import { Button, CircularProgress } from "@mui/material";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const ColumnsProductosManufacturados = [
-  { label: "Id", key: "id" },
+  { label: "ID", key: "id" },
   { label: "Nombre", key: "denominacion" },
   {
     label: "Categoria",
@@ -32,7 +34,7 @@ const ColumnsProductosManufacturados = [
     render: (element: IProductoManufacturado) => (element.alta ? "Si" : "No"),
   },
   {
-    label: "Precio",
+    label: "Precio $",
     key: "precioVenta",
   },
   {
@@ -93,56 +95,61 @@ export const MasterDetail = () => {
   };
 
   return (
-    <div>
-      <NavBar />
-      <div
-        style={{
-          height: "10vh",
-          width: "100%",
-          display: "flex",
-          justifyContent: "flex-end",
-        }}
-      >
-        <div
-          style={{
-            height: "100%",
-            width: "20%",
-            padding: ".4rem",
-          }}
-        >
-          <Button className="custom-button"
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              
-              setOpenModal(true);
+    <div style={{ display: "flex", height: "100vh" }}>
+      <SideBar />
+      <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+        <div className="navbar-fixed">
+          <NavBar />
+        </div>
+        <div className="content-container">
+          <div
+            style={{
+              height: "10vh",
+              width: "100%",
+              display: "flex",
+              justifyContent: "flex-end",
+              padding: "0.4rem",
             }}
           >
-            Agregar un producto manufacturado
-          </Button>
+          </div>
+          <div style={{ flex: 1, padding: "1rem" }}>
+            {!loading ? (
+              <TableGeneric
+                handleDelete={handleDelete}
+                columns={ColumnsProductosManufacturados}
+                setOpenModal={setOpenModal}
+                handleCancelOrRegister={handleCancelOrRegister}
+              />
+            ) : (
+              <div
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <CircularProgress />
+              </div>
+            )}
+            <div className="button-container">
+              <Button
+                className="custom-button"
+                variant="contained"
+                color="primary"
+                onClick={() => setOpenModal(true)}
+                
+              >
+                Agregar un producto manufacturado
+              </Button>
+            </div>
+          </div>
+          
         </div>
+        
       </div>
-
-      {!loading ? (
-        // Mostrar la tabla de personas una vez que los datos se han cargado
-        <TableGeneric<IProductoManufacturado>
-          handleDelete={handleDelete}
-          columns={ColumnsProductosManufacturados}
-          setOpenModal={setOpenModal}
-          handleCancelOrRegister={handleCancelOrRegister}
-        />
-      ) : (
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <CircularProgress />
-        </div>
-      )}
+      
       <MasterDetailModal
         getData={getDataTable}
         open={openModal}
@@ -151,3 +158,4 @@ export const MasterDetail = () => {
     </div>
   );
 };
+

@@ -52,6 +52,7 @@ export const ButtonsTable = ({
         display: "flex",
         alignItems: "center",
         justifyContent: "space-around",
+        
       }}
     >
       {/* ALTA Y BAJA */}
@@ -59,19 +60,19 @@ export const ButtonsTable = ({
         <Button
           onClick={handleChangeRegisterOrCancelItem}
           variant="contained"
-          color="error"
+          sx={{ backgroundColor: '#dd5555', color: 'white', '&:hover': { backgroundColor: '#d82727' } }}
         >
           Deshabilitar
-          <span className="material-symbols-outlined">block</span>
+        
         </Button>
       ) : (
-        <Button
+        <Button 
           onClick={handleChangeRegisterOrCancelItem}
           variant="contained"
-          color="success"
+          sx={{ backgroundColor: '#a6c732', color: 'white', '&:hover': { backgroundColor: '#9cc40f' } }}
         >
           Habilitar
-          <span className="material-symbols-outlined">check</span>
+         
         </Button>
       )}
       {/* Botón para editar el elemento */}

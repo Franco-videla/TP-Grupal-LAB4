@@ -60,7 +60,7 @@ export const TableGeneric = <T extends { id: any }>({
   useEffect(() => {
     setRows(dataTable);
   }, [dataTable]);
-
+ 
   return (
     <div
       style={{
@@ -68,12 +68,17 @@ export const TableGeneric = <T extends { id: any }>({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: "#f0f0f0", // Fondo gris claro
+        padding: "30px", // Espaciado interno
+        borderRadius: "10px", // Bordes redondeados
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)", // Sombra sutil
+        margin: "10px 0" // Margen superior e inferior
       }}
     >
       {/* Contenedor del componente Paper */}
-      <Paper sx={{ width: "90%", overflow: "hidden" }}>
+      <Paper sx={{ width: "200%", overflow: "hidden",background : "#e0ebc2"}}>
         {/* Contenedor de la tabla */}
-        <TableContainer sx={{ maxHeight: "80vh" }}>
+        <TableContainer sx={{ maxHeight: "80vh",background : "#e0ebc2" }}>
           {/* Tabla */}
           <Table stickyHeader aria-label="sticky table">
             {/* Encabezado de la tabla */}

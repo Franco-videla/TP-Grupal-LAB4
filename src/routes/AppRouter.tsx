@@ -3,7 +3,9 @@ import { MasterDetail } from "../components/screens/MasterDetail";
 
 export const AppRouter = () => {
   return (
+   
     <Routes>
+
       <Route path="*" element={<MasterDetail />} />
     </Routes>
   );

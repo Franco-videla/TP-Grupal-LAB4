@@ -12,7 +12,7 @@
   height: 85vh;
   overflow-y: auto;
   border-radius: 0.4rem;
-  background-color: #e0ebc2;
+  background-color: #c2dd79;
   color: #a6c732; 
   display: flex;
   flex-direction: column;
@@ -26,12 +26,14 @@
   align-items: center;
   gap: 2vh;
   width: 100%;
+  background-color: #c2dd79;
 }
 
 .productContainerInputs {
   display: flex;
   flex-direction: column;
   width: 90%;
+  background-color: #e0ebc2;
 }
 
 .ingredientesTableContainer {
@@ -41,11 +43,12 @@
   align-items: center;
   gap: 2vh;
   width: 100%;
-  margin-bottom: 4vh;
+  margin-bottom: 3vh;
 }
 
 .ingredientesTableContainerItem {
   display: flex;
   flex-direction: column;
   width: 90%;
+  
 }
