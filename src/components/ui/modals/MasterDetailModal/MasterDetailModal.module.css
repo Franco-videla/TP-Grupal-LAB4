@@ -1,24 +1,23 @@
 .modalContainer {
   width: 100vw;
   z-index: 200;
-  height: 105vh;
+  height: 90vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Helvetica', sans-serif; 
-  
+  font-family: Helvetica, sans-serif;
 }
+
 .modalContainerContent {
   width: 80vw;
-  height: 92vh;
+  height: 85vh;
   overflow-y: auto;
   border-radius: 3rem;
   background-color: #e0ebc2;
-  color: #FFFFBF; 
+  color: #414141;
   display: flex;
   flex-direction: column;
   position: relative;
-
 }
 
 .productContainer {
@@ -28,16 +27,46 @@
   align-items: center;
   gap: 2vh;
   width: 100%;
-  background-color: #e0ebc2;
-    color: #FFFFBF; 
 }
 
 .productContainerInputs {
   display: flex;
   flex-direction: column;
   width: 90%;
-  background-color: #e0ebc2;
- 
+}
+
+.productContainerRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
+.productContainerRowLabel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+.descriptionContainer {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.descriptionContainerLabel {
+  width: 100%;
+  font-weight: bold;
+}
+
+.recipeContainer {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.recipeContainerLabel {
+  width: 100%;
+  font-weight: bold;
 }
 
 .ingredientesTableContainer {
@@ -47,13 +76,42 @@
   align-items: center;
   gap: 2vh;
   width: 100%;
-  margin-bottom: 3vh;
-
+  margin-top: 1rem;
 }
 
 .ingredientesTableContainerItem {
   display: flex;
   flex-direction: column;
   width: 90%;
-  
+}
+
+.ingredientesList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ingredientesListItem {
+  background-color: #a6c732;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 5px 0;
+  color: white;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 2vh;
+}
+
+.confirmButton {
+  background-color: #414141;
+  color: white;
+  margin-left: 1rem;
+}
+
+.button {
+  background-color: #414141;
+  color: white;
 }

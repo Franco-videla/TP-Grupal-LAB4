@@ -1,19 +1,18 @@
-import './customNavBar.css';
-import { useEffect, useState } from "react";
-import { MasterDetailModal } from "../ui/modals/MasterDetailModal/MasterDetailModal";
+import React, { useEffect, useState } from "react";
 import { NavBar } from "../ui/common/NavBar";
 import { SideBar } from "../ui/common/SideBar";
 import { TableGeneric } from "../ui/tables/TableGeneric/TableGeneric";
 import { IProductoManufacturado } from "../../types/IProductoManufacturado";
 import { ProductoManufacturadoService } from "../../services/ProductoManufacturadoService";
 import { useAppDispatch } from "../../hooks/redux";
-
 import {
   removeElementActive,
   setDataTable,
 } from "../../redux/slices/TablaReducer";
 import { Button, CircularProgress } from "@mui/material";
-// Definición de la URL base de la API
+import SearchBar from "../ui/searchBar/SearchBar";
+import { MasterDetailModal } from "../ui/modals/MasterDetailModal/MasterDetailModal";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const ColumnsProductosManufacturados = [
@@ -44,26 +43,23 @@ const ColumnsProductosManufacturados = [
 ];
 
 export const MasterDetail = () => {
-  //manejo de estado del modal
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const handleCloseModal = () => {
     setOpenModal(false);
-    dispatch(removeElementActive()); //al cerrar el modal siempre reseteamos el elemento activo
+    dispatch(removeElementActive());
   };
 
-  //instanciamos el loader de la carga de datos
   const [loading, setLoading] = useState<boolean>(false);
 
-  //instanciamos el dispatch
   const dispatch = useAppDispatch();
 
-  //instanciamos los servicios
   const productoManufacturadoService = new ProductoManufacturadoService(
     `${API_URL}/producto_manufacturado`
   );
 
-  // Función para obtener los productos manufacturados
+  const [searchTerm, setSearchTerm] = useState("");
+
   const getDataTable = async () => {
     await productoManufacturadoService.getAll().then((dataTable) => {
       dispatch(setDataTable(dataTable));
@@ -71,20 +67,11 @@ export const MasterDetail = () => {
     });
   };
 
-  // Efecto para cargar los datos al inicio
   useEffect(() => {
     setLoading(true);
     getDataTable();
   }, []);
 
-  //funcion para eleminar un elemento
-  const handleDelete = async (id: number | string) => {
-    await productoManufacturadoService.delete(id);
-    dispatch(removeElementActive());
-    getDataTable();
-  };
-
-  //funcion para dar de baja o alta un elemento
   const handleCancelOrRegister = async (
     id: number | string,
     data: IProductoManufacturado
@@ -102,24 +89,37 @@ export const MasterDetail = () => {
           <NavBar />
         </div>
         <div className="content-container">
-        <h1 style={{ textAlign: "center", marginTop: "3rem", marginBottom: "0.1rem" }}>Productos</h1>
+          <h1 style={{ textAlign: "center", marginTop: "3rem", marginBottom: "0.1rem" }}>
+            Productos
+          </h1>
           <div
             style={{
               height: "10vh",
               width: "100%",
               display: "flex",
-              justifyContent: "flex-end",
+              justifyContent: "space-between",
+              alignItems: "center",
               padding: "0.4rem",
             }}
           >
+            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+            <Button
+              style={{ letterSpacing: "1px", fontWeight: "bold" }}
+              className="custom-button"
+              variant="contained"
+              color="primary"
+              onClick={() => setOpenModal(true)}
+            >
+              Agregar un producto manufacturado
+            </Button>
           </div>
           <div style={{ flex: 1, padding: "1rem" }}>
             {!loading ? (
               <TableGeneric
-                handleDelete={handleDelete}
                 columns={ColumnsProductosManufacturados}
                 setOpenModal={setOpenModal}
                 handleCancelOrRegister={handleCancelOrRegister}
+                searchTerm={searchTerm}
               />
             ) : (
               <div
@@ -134,23 +134,9 @@ export const MasterDetail = () => {
                 <CircularProgress />
               </div>
             )}
-            <div className="button-container">
-              <Button 
-              style={{ letterSpacing: "1px", fontWeight: "bold" }}
-                className="custom-button"
-                variant="contained"
-                color="primary"
-                onClick={() => setOpenModal(true)}
-              >
-                Agregar un producto manufacturado
-              </Button>
-            </div>
           </div>
-          
         </div>
-        
       </div>
-      
       <MasterDetailModal
         getData={getDataTable}
         open={openModal}
@@ -159,4 +145,3 @@ export const MasterDetail = () => {
     </div>
   );
 };
-

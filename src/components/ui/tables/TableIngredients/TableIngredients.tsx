@@ -59,13 +59,12 @@ export const TableIngredients = ({
     handleConfirm("Seguro quieres eliminar el ingrediente", handleDelete);
   };
   return (
-    
     <TableContainer component={Paper} sx={{ maxHeight: "25vh" }}>
       <Table sx={{ minWidth: 650 }} stickyHeader aria-label="simple table">
         <TableHead>
           <TableRow>
             {columns.map((column, i: number) => (
-              <TableCell key={i} align={"center"}sx={{ backgroundColor: '#a6c732' }}>
+              <TableCell key={i} align={"center"}>
                 {column.label}
               </TableCell>
             ))}
@@ -77,13 +76,12 @@ export const TableIngredients = ({
               {/* Celdas de la fila */}
               {columns.map((column, i: number) => {
                 return (
-                  <TableCell key={i} align={"center"} sx={{ backgroundColor: '#e0ebc2' }} >
+                  <TableCell key={i} align={"center"}>
                     {
                       column.render ? ( // Si existe la función "render" se ejecuta
                         column.render(row)
                       ) : column.key === "actions" ? ( // Si el label de la columna es "Acciones" se renderizan los botones de acción
                         <Button
-                        style={{backgroundColor:"#414141",color:"white" }}
                           variant="text"
                           onClick={() => handleDelete(index)}
                         >

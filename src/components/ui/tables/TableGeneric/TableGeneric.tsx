@@ -20,19 +20,19 @@ interface ITableColumn<T> {
 
 export interface ITableProps<T> {
   columns: ITableColumn<T>[]; // Definición de las columnas de la tabla
-  handleDelete: (id: number | string) => void; // Función para manejar la eliminación de un elemento
   setOpenModal: (state: boolean) => void;
   handleCancelOrRegister: (
     id: number | string,
     data: IProductoManufacturado
   ) => void;
+  searchTerm: string; // Añadimos searchTerm como una propiedad
 }
 
 export const TableGeneric = <T extends { id: any }>({
   columns,
-  handleDelete,
   setOpenModal,
   handleCancelOrRegister,
+  searchTerm, // Añadimos searchTerm
 }: ITableProps<T>) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -60,7 +60,17 @@ export const TableGeneric = <T extends { id: any }>({
   useEffect(() => {
     setRows(dataTable);
   }, [dataTable]);
- 
+
+  // Filtrar las filas según el término de búsqueda
+  const filteredRows = rows.filter((row) =>
+    columns.some((column) =>
+      row[column.key]
+        ?.toString()
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    )
+  );
+
   return (
     <div
       style={{
@@ -76,9 +86,9 @@ export const TableGeneric = <T extends { id: any }>({
       }}
     >
       {/* Contenedor del componente Paper */}
-      <Paper sx={{ width: "200%", overflow: "hidden",background : "#e0ebc2"}}>
+      <Paper sx={{ width: "200%", overflow: "hidden", background : "#e0ebc2" }}>
         {/* Contenedor de la tabla */}
-        <TableContainer sx={{ maxHeight: "80vh",background : "#e0ebc2" }}>
+        <TableContainer sx={{ maxHeight: "80vh", background : "#e0ebc2" }}>
           {/* Tabla */}
           <Table stickyHeader aria-label="sticky table">
             {/* Encabezado de la tabla */}
@@ -93,7 +103,7 @@ export const TableGeneric = <T extends { id: any }>({
             </TableHead>
             {/* Cuerpo de la tabla */}
             <TableBody>
-              {rows
+              {filteredRows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index: number) => {
                   return (
@@ -108,11 +118,8 @@ export const TableGeneric = <T extends { id: any }>({
                               ) : column.label === "Acciones" ? ( // Si el label de la columna es "Acciones" se renderizan los botones de acción
                                 <ButtonsTable
                                   el={row}
-                                  handleDelete={handleDelete}
                                   setOpenModal={setOpenModal}
-                                  handleCancelOrRegister={
-                                    handleCancelOrRegister
-                                  }
+                                  handleCancelOrRegister={handleCancelOrRegister}
                                 />
                               ) : (
                                 row[column.key]
@@ -131,7 +138,7 @@ export const TableGeneric = <T extends { id: any }>({
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={rows.length}
+          count={filteredRows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

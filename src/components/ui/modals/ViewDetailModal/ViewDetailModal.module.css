@@ -1,0 +1,110 @@
+.modalContainer {
+    width: 100vw;
+    z-index: 200;
+    height: 90vh; /* Reducir la altura */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Helvetica', sans-serif;
+  }
+  
+  .modalContainerContent {
+    width: 80vw; /* Reducir el ancho */
+    height: 85vh; /* Reducir la altura */
+    overflow-y: auto;
+    border-radius: 3rem;
+    background-color: #e0ebc2;
+    color: #414141;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  .productContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2vh;
+    width: 100%;
+  }
+  
+  .productContainerInputs {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+  }
+  
+  .productContainerRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+  }
+  
+  .productContainerRow > label {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold; /* Etiquetas en negrita */
+  }
+  
+  .descriptionContainer,
+  .recipeContainer {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  .descriptionContainer > label,
+  .recipeContainer > label {
+    width: 100%;
+    font-weight: bold; /* Etiquetas en negrita */
+  }
+  
+  .ingredientesTableContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2vh;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  .ingredientesTableContainerItem {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+  }
+  
+  .ingredientesList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .ingredientesListItem {
+    background-color: #a6c732;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+    color: white;
+  }
+  
+  .buttonContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 2vh;
+  }
+  
+  .confirmButton {
+    background-color: #414141;
+    color: white;
+    margin-left: 1rem;
+  }
+  
+  .button {
+    background-color: #414141;
+    color: white;
+  }
+  

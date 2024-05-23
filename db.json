@@ -221,7 +221,7 @@
         "categorias_hijas": null
       },
       "denominacion": "Pizza Hawaiana",
-      "alta": true,
+      "alta": false,
       "precioVenta": 10.99,
       "tiempoEstimadoMinutos": 30,
       "descripción": "La Pizza Hawaiana es una deliciosa combinación de sabores dulces y salados que te transportará a una isla tropical en cada bocado. Con una base de masa de pizza perfectamente horneada, se cubre con salsa de tomate, generosas porciones de mozzarella derretida, jugosas rodajas de piña fresca y trozos de jamón ahumado.",
@@ -285,21 +285,288 @@
             "categorias_hijas": null
           },
           "cantidad": 5
-        },
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "alta": false,
+      "categoria": {
+        "id": "2",
+        "denominacion": "Papas",
+        "categorias_hijas": null
+      },
+      "denominacion": "papones",
+      "precioVenta": 100,
+      "tiempoEstimadoMinutos": 10,
+      "descripción": "dasdas",
+      "receta": "asdasd",
+      "ingredientes": [
         {
-          "id": 5,
-          "denominacion": "Jamón",
+          "id": 1,
+          "denominacion": "Ingrediente",
           "unidadMedida": {
-            "id": 5,
-            "abreviatura": "rebanada",
-            "denominacion": "rebanada"
+            "id": 1,
+            "denominacion": "",
+            "abreviatura": ""
           },
           "categoria": {
-            "id": 4,
-            "denominacion": "Carnes",
+            "id": 1,
+            "denominacion": ""
+          },
+          "cantidad": 1
+        },
+        {
+          "id": 2,
+          "denominacion": "Ingrediente",
+          "unidadMedida": {
+            "id": 1,
+            "denominacion": "",
+            "abreviatura": ""
+          },
+          "categoria": {
+            "id": 1,
+            "denominacion": ""
+          },
+          "cantidad": 1
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "alta": false,
+      "categoria": {
+        "id": "4",
+        "denominacion": "Carnes",
+        "categorias_hijas": null
+      },
+      "denominacion": "bifardos",
+      "precioVenta": 100,
+      "tiempoEstimadoMinutos": 10,
+      "descripción": "dasdasd",
+      "receta": "asdasdasd",
+      "ingredientes": [
+        {
+          "id": 1,
+          "denominacion": "Masa de pizza",
+          "unidadMedida": {
+            "id": 7,
+            "abreviatura": "unidad",
+            "denominacion": "ud"
+          },
+          "categoria": {
+            "id": 6,
+            "denominacion": "Masas",
             "categorias_hijas": null
           },
-          "cantidad": 5
+          "cantidad": 1
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "alta": false,
+      "categoria": {
+        "id": "2",
+        "denominacion": "Papas",
+        "categorias_hijas": null
+      },
+      "denominacion": "papanas",
+      "precioVenta": 100,
+      "tiempoEstimadoMinutos": 10,
+      "descripción": "dasdas",
+      "receta": "asdasd",
+      "ingredientes": []
+    },
+    {
+      "id": "0",
+      "alta": false,
+      "categoria": {
+        "id": "1",
+        "denominacion": "Pizzas",
+        "categorias_hijas": null
+      },
+      "denominacion": "Pizzota",
+      "precioVenta": 101,
+      "tiempoEstimadoMinutos": 10,
+      "descripción": "dasdas",
+      "receta": "asdasd",
+      "ingredientes": [
+        {
+          "id": 1,
+          "denominacion": "Salsa de tomate",
+          "unidadMedida": {
+            "id": 8,
+            "abreviatura": "cucharada",
+            "denominacion": "cucharada"
+          },
+          "categoria": {
+            "id": 2,
+            "denominacion": "Salsas"
+          },
+          "cantidad": 1
+        },
+        {
+          "id": 2,
+          "denominacion": "Tomate",
+          "unidadMedida": {
+            "id": 7,
+            "abreviatura": "ud",
+            "denominacion": "unidad"
+          },
+          "categoria": {
+            "id": 3,
+            "denominacion": "Vegetales"
+          },
+          "cantidad": 1
+        }
+      ]
+    },
+    {
+      "id": "0",
+      "alta": true,
+      "categoria": {
+        "id": "1",
+        "denominacion": "Pizzas",
+        "categorias_hijas": null
+      },
+      "denominacion": "paponesss",
+      "precioVenta": 100,
+      "tiempoEstimadoMinutos": 10,
+      "descripción": "sdasd",
+      "receta": "asdas",
+      "ingredientes": [
+        {
+          "id": 1,
+          "denominacion": "Mozzarella",
+          "unidadMedida": {
+            "id": 1,
+            "denominacion": "gramos",
+            "abreviatura": "gr"
+          },
+          "categoria": {
+            "id": 1,
+            "denominacion": "Quesos"
+          },
+          "cantidad": 2
+        }
+      ]
+    },
+    {
+      "id": "0",
+      "alta": true,
+      "categoria": {
+        "id": "2",
+        "denominacion": "Papas",
+        "categorias_hijas": null
+      },
+      "denominacion": "adsadasd",
+      "precioVenta": 100,
+      "tiempoEstimadoMinutos": 10,
+      "descripción": "dadas",
+      "receta": "asdasd",
+      "ingredientes": [
+        {
+          "id": 1,
+          "denominacion": "Tomate",
+          "unidadMedida": {
+            "id": 7,
+            "abreviatura": "ud",
+            "denominacion": "unidad"
+          },
+          "categoria": {
+            "id": 3,
+            "denominacion": "Vegetales"
+          },
+          "cantidad": 1
+        },
+        {
+          "id": 2,
+          "denominacion": "Mozzarella",
+          "unidadMedida": {
+            "id": 1,
+            "denominacion": "gramos",
+            "abreviatura": "gr"
+          },
+          "categoria": {
+            "id": 1,
+            "denominacion": "Quesos"
+          },
+          "cantidad": 12
+        }
+      ]
+    },
+    {
+      "id": "0",
+      "alta": true,
+      "categoria": {
+        "id": "2",
+        "denominacion": "Papas",
+        "categorias_hijas": null
+      },
+      "denominacion": "22222",
+      "precioVenta": 100,
+      "tiempoEstimadoMinutos": 10,
+      "descripción": "",
+      "receta": "dasd",
+      "ingredientes": [
+        {
+          "id": 1,
+          "denominacion": "Mozzarella",
+          "unidadMedida": {
+            "id": 1,
+            "denominacion": "gramos",
+            "abreviatura": "gr"
+          },
+          "categoria": {
+            "id": 1,
+            "denominacion": "Quesos"
+          },
+          "cantidad": 1
+        }
+      ]
+    },
+    {
+      "id": "0",
+      "alta": true,
+      "categoria": {
+        "id": "1",
+        "denominacion": "Pizzas",
+        "categorias_hijas": null
+      },
+      "denominacion": "Pizzota",
+      "precioVenta": 101,
+      "tiempoEstimadoMinutos": 10,
+      "descripción": "dasdas",
+      "receta": "asdasd",
+      "ingredientes": [
+        {
+          "id": 1,
+          "denominacion": "Salsa de tomate",
+          "unidadMedida": {
+            "id": 8,
+            "abreviatura": "cucharada",
+            "denominacion": "cucharada"
+          },
+          "categoria": {
+            "id": 2,
+            "denominacion": "Salsas"
+          },
+          "cantidad": 1
+        },
+        {
+          "id": 2,
+          "denominacion": "Tomate",
+          "unidadMedida": {
+            "id": 7,
+            "abreviatura": "ud",
+            "denominacion": "unidad"
+          },
+          "categoria": {
+            "id": 3,
+            "denominacion": "Vegetales"
+          },
+          "cantidad": 1
         }
       ]
     }

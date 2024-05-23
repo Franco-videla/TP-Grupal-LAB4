@@ -1,161 +1,142 @@
 import {
   Button,
-
   MenuItem,
   Modal,
   Select,
-  SelectChangeEvent,
   TextField,
+  OutlinedInput,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  InputAdornment,
+  DialogActions
 } from "@mui/material";
-import { ChangeEvent, FC, useEffect, useState } from "react";
-import styles from "./MasterDetailModal.module.css";
+import { FC, useEffect, useState } from "react";
 import { TableIngredients } from "../../tables/TableIngredients/TableIngredients";
-import { useAppDispatch, useAppSelector } from "../../../../hooks/redux";
 import { IInsumo } from "../../../../types/IInsumo";
 import { categorias } from "../../../../types/Icategorias";
 import { CategoriaComidaService } from "../../../../services/CategoriaComidaService";
 import { ProductoManufacturadoService } from "../../../../services/ProductoManufacturadoService";
-import { removeElementActive } from "../../../../redux/slices/TablaReducer";
 import { InsumoServices } from "../../../../services/InsumosServices";
 import { IProductoManufacturado } from "../../../../types/IProductoManufacturado";
-import { handleSuccess } from "../../../../helpers/alerts";
-import '../../../screens/customNavBar.css';
+import styles from "./MasterDetailModal.module.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
-//valores iniciales del modal
-const initialValues: IProductoManufacturado = {
-  id: "0",
-  alta: true,
-  categoria: {
-    id: "0",
-    denominacion: "Seleccione una categoria",
-    categorias_hijas: null,
-  },
-  denominacion: "",
-  precioVenta: 100,
-  tiempoEstimadoMinutos: 10,
-  descripción: "",
-  receta: "",
-  ingredientes: [],
-};
-const initialIngredients = {
-  categoriaInsumo: "Categoria",
-  ingrediente: {
-    id: "0",
-    denominacion: "Ingrediente",
-    unidadMedida: {
-      id: 1,
-      denominacion: "",
-      abreviatura: "",
-    },
-    categoria: {
-      id: 1,
-      denominacion: "",
-    },
-    cantidad: 0,
-  },
-  cantidad: 1,
-};
 
 interface IMasterDetailModal {
   open: boolean;
-  getData: () => void;
   handleClose: () => void;
+  getData: () => void;
 }
 
-export const MasterDetailModal: FC<IMasterDetailModal> = ({
-  handleClose,
-  open,
-  getData,
-}) => {
-  //======= PROPIEDADES ARTICULO MANUFACTURADO=========
-  const [itemValue, setItemValue] = useState(initialValues); //state del articulo manufacturado
+export const MasterDetailModal: FC<IMasterDetailModal> = ({ handleClose, open, getData }) => {
+  const [itemValue, setItemValue] = useState<IProductoManufacturado>({
+    id: "0",
+    alta: true,
+    categoria: {
+      id: "0",
+      denominacion: "Seleccione una categoria",
+      categorias_hijas: null,
+    },
+    denominacion: "",
+    precioVenta: 100,
+    tiempoEstimadoMinutos: 10,
+    descripción: "",
+    receta: "",
+    ingredientes: [],
+  });
 
-  const resetValues = () => {
-    setItemValue(initialValues);
-  };
+  const [deleteIndex, setDeleteIndex] = useState<number>(-1);
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
-  //maneja los cambios de los inputs del articulo manufacturado (nombre, precio, tiempo, descripcion, receta)
-  const handlePropsElementsInputs = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-    const copyValues = { ...itemValue };
-    setItemValue({
-      ...copyValues,
-      [`${name}`]: value,
-    });
-  };
+  const [categoriaComidas, setCategoriaComidas] = useState<categorias[]>([]);
+  const [insumosCategories, setInsumosCategories] = useState<categorias[]>([]);
+  const [insumosByCategorie, setInsumosByCategorie] = useState<IInsumo[]>([]);
+  const [valueInsumos, setValueInsumo] = useState<any>({
+    categoriaInsumo: "Categoria",
+    ingrediente: {
+      id: "0",
+      denominacion: "Ingrediente",
+      unidadMedida: {
+        id: 1,
+        denominacion: "",
+        abreviatura: "",
+      },
+      categoria: {
+        id: 1,
+        denominacion: "",
+      },
+      cantidad: 0,
+    },
+    cantidad: 1,
+  });
 
+  const [errors, setErrors] = useState<any>({
+    denominacion: "",
+    categoria: "",
+    precioVenta: "",
+    tiempoEstimadoMinutos: "",
+    descripción: "",
+    receta: "",
+  });
 
+  const categoriaComidaService = new CategoriaComidaService(`${API_URL}/categorias_comida`);
+  const categoriaInsumosService = new CategoriaComidaService(`${API_URL}/categorias_insumos`);
+  const productoManufacturadoService = new ProductoManufacturadoService(`${API_URL}/producto_manufacturado`);
+  const insumosServices = new InsumoServices(`${API_URL}/insumos`);
 
-  //traemos categorias del apartado comida
-  const [categoriaComidas, setcategoriaComidas] = useState<categorias[]>([]);
-
-  //realizamos el cambio de categoria en articuloManufacturado TODO: REVISAR Otra alternativa a mui
-  const handleChangeCategorieArticuloManufacturado = async (
-    e: SelectChangeEvent
-  ) => {
-    const denominacion = e.target.value;
-    const res = await categoriaComidaService
-      .getById(denominacion)
-      .then((data) => data);
-    if (res) {
-      setItemValue({ ...itemValue, categoria: res });
+  const handleChangeCategorieArticuloManufacturado = (e: any) => {
+    const id = e.target.value;
+    const categoria = categoriaComidas.find((cat) => cat.id === id);
+    if (categoria) {
+      setItemValue({ ...itemValue, categoria });
+      setErrors({ ...errors, categoria: "" });
+    } else {
+      setErrors({ ...errors, categoria: "Debe seleccionar una categoría" });
     }
   };
 
-  //============INGREDIENTES DEL ARTICULO MANUFACTURADO
-  //contiene el estado de nuestra manera de agregar los ingredientes
-  const [valueInsumos, setvaluesInsumo] = useState<any>(initialIngredients);
-  const resetValueInsumos = () => {
-    setvaluesInsumo(initialIngredients);
-  };
-  //trae las categorias del apartado insumos
-  const [insumosCategories, setInsumosCategories] = useState<categorias[]>([]);
-
-  //seleccionamos una categoria del apartado insumos y se setean todos los ingredientes que vayan con ella
-  const handleChangeinsumosCategories = async (e: SelectChangeEvent) => {
-    const insumos = await insumosServices.getAll().then((data) => data);
+  const handleChangeinsumosCategories = async (e: any) => {
+    const insumos = await insumosServices.getAll();
     const denominacion = e.target.value;
-    setvaluesInsumo({ ...initialIngredients, categoriaInsumo: denominacion });
-    const result = insumos.filter(
-      (el) => el.categoria.denominacion === denominacion
-    );
+    setValueInsumo({ ...valueInsumos, categoriaInsumo: denominacion });
+    const result = insumos.filter((el) => el.categoria.denominacion === denominacion);
     setInsumosByCategorie(result);
   };
 
-  //estado que almacena ingredientes segun la categoria activa
-  const [insumosByCategorie, setInsumosByCategorie] = useState<IInsumo[]>([]);
-
-  //realizamos el cambio del ingrediente actual
-  const handleChangeInsumosValues = async (e: SelectChangeEvent) => {
+  const handleChangeInsumosValues = async (e: any) => {
     const { value } = e.target;
-    const res = await insumosServices.getById(value).then((data) => data);
-    if (res) setvaluesInsumo({ ...valueInsumos, ingrediente: res });
+    const res = await insumosServices.getById(value);
+    if (res) setValueInsumo({ ...valueInsumos, ingrediente: res });
   };
 
-  //realizamos el cambio de la cantidad del ingrediente
-  const handleAmountInsumoValue = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleAmountInsumoValue = (e: any) => {
     const { value } = e.target;
-    setvaluesInsumo({ ...valueInsumos, cantidad: value });
+    setValueInsumo({ ...valueInsumos, cantidad: value });
   };
 
-  //añadimos un nuevo ingrediente a nuestro articulo manufacturado
   const handleNewIngredient = () => {
     const parse = {
       ...valueInsumos.ingrediente,
       id: itemValue.ingredientes.length + 1,
       cantidad: parseInt(valueInsumos.cantidad),
     };
-    setItemValue({
-      ...itemValue,
-      ingredientes: [...itemValue.ingredientes, parse],
-    });
-    resetValueInsumos();
+    setItemValue({ ...itemValue, ingredientes: [...itemValue.ingredientes, parse] });
+    setValueInsumo({ ...valueInsumos, cantidad: 1 });
     setInsumosByCategorie([]);
   };
 
-  //eliminamos un ingrediente
-  const deleteIngredient = (indice: number) => {
+  const handleDeleteIngredient = () => {
+    setItemValue({
+      ...itemValue,
+      ingredientes: itemValue.ingredientes.filter((_el, index) => index !== deleteIndex),
+    });
+    setDialogOpen(false);
+  };
+
+   //eliminamos un ingrediente
+   const deleteIngredient = (indice: number) => {
     setItemValue({
       ...itemValue,
       ingredientes: itemValue.ingredientes.filter(
@@ -164,299 +145,214 @@ export const MasterDetailModal: FC<IMasterDetailModal> = ({
     });
   };
 
-  //========LOGICA DEL MODAL==================
-  //TODO: NO HACER
-  const amountItems = useAppSelector(
-    (state) => state.tablaReducer.dataTable.length
-  );
-  //si se confirma edita o agrega un nuevo elemento
-  const handleConfirmModal = async () => {
-    if (data) {
-      await productoManufacturadoService.put(data.id, itemValue);
-    } else {
-      const parseNewId = { ...itemValue, id: `${amountItems + 1}` };
-      await productoManufacturadoService.post(parseNewId);
+  const validateForm = () => {
+    let valid = true;
+    let newErrors = { denominacion: "", categoria: "", precioVenta: "", tiempoEstimadoMinutos: "", descripción: "", receta: "" };
+
+    if (!itemValue.denominacion.trim()) {
+      newErrors.denominacion = "El nombre es requerido";
+      valid = false;
     }
-    handleSuccess("Elemento guardado correctamente");
-    handleClose();
-    resetValues();
-    getData(); //trae nuevamente los elementos
-    dispatch(removeElementActive()); //remueve el activo
+    if (itemValue.categoria.id === "0") {
+      newErrors.categoria = "Debe seleccionar una categoría";
+      valid = false;
+    }
+    if (itemValue.precioVenta <= 0) {
+      newErrors.precioVenta = "El precio debe ser mayor a 0";
+      valid = false;
+    }
+    if (itemValue.tiempoEstimadoMinutos <= 0) {
+      newErrors.tiempoEstimadoMinutos = "El tiempo debe ser mayor a 0";
+      valid = false;
+    }
+    if (itemValue.ingredientes.length === 0) {
+      alert("Debe agregar al menos un ingrediente");
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
   };
 
-  //======== REDUX ==================
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    if (!validateForm()) return;
 
-  const dispatch = useAppDispatch();
-  const data = useAppSelector((state) => state.tablaReducer.elementActive);
-
-  //========SERVICIOS==================
-
-  const categoriaComidaService = new CategoriaComidaService(
-    `${API_URL}/categorias_comida`
-  );
-
-  const categoriaInsumosService = new CategoriaComidaService(
-    `${API_URL}/categorias_insumos`
-  );
-
-  const productoManufacturadoService = new ProductoManufacturadoService(
-    `${API_URL}/producto_manufacturado`
-  );
-
-  const insumosServices = new InsumoServices(`${API_URL}/insumos`);
-
-  //funciones para traer los elementos
-  const getCategoriasInsumos = async () => {
-    await categoriaInsumosService.getAll().then((data) => {
-      setInsumosCategories(data);
-    });
-  };
-
-  const getCategories = async () => {
-    await categoriaComidaService.getAll().then((data) => {
-      setcategoriaComidas(data);
-    });
-  };
-
-  useEffect(() => {
-    if (data) {
+    const response = await productoManufacturadoService.post(itemValue);
+    if (response) {
+      handleClose();
+      getData();
       setItemValue({
-        id: data.id,
-        categoria: data.categoria,
-        denominacion: data.denominacion,
-        alta: data.alta,
-        precioVenta: data.precioVenta,
-        tiempoEstimadoMinutos: data.tiempoEstimadoMinutos,
-        descripción: data.descripción,
-        receta: data.receta,
-        ingredientes: data.ingredientes,
+        id: "0",
+        alta: true,
+        categoria: {
+          id: "0",
+          denominacion: "Seleccione una categoria",
+          categorias_hijas: null,
+        },
+        denominacion: "",
+        precioVenta: 100,
+        tiempoEstimadoMinutos: 10,
+        descripción: "",
+        receta: "",
+        ingredientes: [],
       });
-    } else {
-      resetValues();
     }
-  }, [data]);
+  };
 
-  // cuando entramos al componente si existe un elemento activo lo setea, si no carga los valores por defecto
   useEffect(() => {
-    getCategories();
-    getCategoriasInsumos();
-  }, []);
+    if (open) {
+      categoriaComidaService.getAll().then((data) => setCategoriaComidas(data));
+      categoriaInsumosService.getAll().then((data) => setInsumosCategories(data));
+    }
+  }, [open]);
 
   return (
     <div>
-      <Modal
-        open={open}
-        style={{ zIndex: 200 }}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+      <Modal open={open} onClose={handleClose}>
         <div className={styles.modalContainer}>
-          <div className={styles.modalContainerContent}>
-            <div style={{ textAlign: "center", backgroundColor: "#a6c732" }}>
-              <h1 style={{ letterSpacing: "2px", fontWeight: "bold" }}>{`${data ? "Editar" : "Crear"
-                } un producto`}</h1>
-            </div>
-
-            <div className={styles.productContainer}>
-              <div className={styles.productContainerInputs}>
-                <Select
-                    
-                  variant="outlined"
-                  
-                  value={itemValue.categoria.id}
-                  onChange={handleChangeCategorieArticuloManufacturado}
-                >
-                  <MenuItem selected value={"0"}>
-                    Seleccione una categoria
-                  </MenuItem>
-                  {categoriaComidas.map((el, index) => (
-                    <MenuItem key={index} id={`${el.id}`} value={`${el.id}`}>
-                      {el.denominacion}
-                    </MenuItem>
-                  ))}
-                </Select>
-                <TextField
-                   style={{padding:"15px" }}
-                  label="Nombre"
-                  type="text"
-                  name="denominacion"
-                  onChange={handlePropsElementsInputs}
-                  value={itemValue.denominacion}
-                  variant="standard"
-
-                />
-                <TextField
-                  style={{padding:"15px" }}
-                  type="number"
-                  value={itemValue.precioVenta}
-                  onChange={handlePropsElementsInputs}
-                  name="precioVenta"
-                  label="Precio"
-                  variant="standard"
-                  defaultValue={0}
-
-
-                />
-                <TextField
-                  style={{padding:"15px" }}
-                  type="number"
-                  onChange={handlePropsElementsInputs}
-                  name="tiempoEstimadoMinutos"
-                  value={itemValue.tiempoEstimadoMinutos}
-                  label="Tiempo estimado de preparacion"
-                  variant="standard"
-                  
-                  defaultValue={0}
-
-                />
-                <TextField
-                   style={{ }}
-                  onChange={handlePropsElementsInputs}
-                  label="Descripción"
-                  type="text"
-                  value={itemValue.descripción}
-                  name="descripción"
-                  variant="outlined"
-                  multiline
-                  rows={4}
-
-                />
-
-
-              </div>
-            </div>
-            <div>
-              <div style={{ textAlign: "center", backgroundColor: "#a6c732" }}>
-                <h1 style={{ letterSpacing: "2px", fontWeight: "bold" }}>Carga receta</h1>
-              </div>
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "space-around",
-                  marginBottom: "2vh",
-                }}
+          <h2>Nuevo Artículo Manufacturado</h2>
+          <form onSubmit={handleSubmit}>
+            <div className={styles.formGroup}>
+              <TextField
+                className={styles.textField}
+                name="denominacion"
+                label="Nombre"
+                variant="outlined"
+                value={itemValue.denominacion}
+                onChange={(e) => setItemValue({ ...itemValue, denominacion: e.target.value })}
+                error={Boolean(errors.denominacion)}
+                helperText={errors.denominacion}
+              />
+              <Select
+                className={styles.select}
+                name="categoria"
+                label="Categoría"
+                value={itemValue.categoria.id}
+                onChange={handleChangeCategorieArticuloManufacturado}
+                error={Boolean(errors.categoria)}
+                displayEmpty
               >
-                <TextField
-                  style={{ width: "90%",height:"110px", alignContent:"center", backgroundColor: "#e0ebc2" }}
-                  label="Receta"
-                  type="text"
-                  value={itemValue.receta}
-                  onChange={handlePropsElementsInputs}
-                  name="receta"
-                  variant="outlined"
-                  multiline
-                  rows={4}
-
-                />
-              </div>
-              <div style={{ textAlign: "center", backgroundColor: "#a6c732" }}>
-                <h1 style={{ letterSpacing: "2px", fontWeight: "bold" }}>Ingredientes</h1>
-              </div>
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "space-around",
-                  marginBottom: "2vh",
-                }}
-              >
-                <Select
-                 variant="outlined"
-                  value={valueInsumos.categoriaInsumo}
-                  label="Categoria"
-                  onChange={handleChangeinsumosCategories}
-                >
-                  <MenuItem selected value={"Categoria"}>
-                    Categoria
+                <MenuItem value="0">Seleccione una categoría</MenuItem>
+                {categoriaComidas.map((cat) => (
+                  <MenuItem key={cat.id} value={cat.id}>
+                    {cat.denominacion}
                   </MenuItem>
-                  {insumosCategories.map((el, index) => (
-                    <MenuItem key={index} value={el.denominacion}>
-                      {el.denominacion}
-                    </MenuItem>
-                  ))}
-                </Select>
-
-                <Select
-                 variant="outlined"
-                  label="Ingrediente"
-                  name="Ingrediente"
-                  value={valueInsumos.ingrediente.id}
-                  onChange={handleChangeInsumosValues}
-                >
-                  <MenuItem selected value={"0"}>
-                    Ingrediente
-                  </MenuItem>
-                  {insumosByCategorie.map((el) => (
-                    <MenuItem key={el.id} value={el.id}>
-                      {el.denominacion}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {valueInsumos.ingrediente.denominacion !== "Ingrediente" && (
-                  <TextField
-                    type="text"
-                    label={valueInsumos.ingrediente.unidadMedida.denominacion}
-                    value={valueInsumos.ingrediente.unidadMedida.abreviatura}
-                    variant="outlined"
-                    disabled
-
-                  />
-                )}
-                <TextField
-                  type="number"
-                  name="cantidad"
-                  label="IngreseCantidad"
-                  onChange={handleAmountInsumoValue}
-                  value={valueInsumos.cantidad}
-                  variant="outlined"
-                  defaultValue={10}
-
-                />
-                <Button 
-                style={{backgroundColor:"#a6c732",color:"#FFFFBF" }}
-                onClick={handleNewIngredient} variant="text">
-                  Añadir
-                </Button>
-              </div>
+                ))}
+              </Select>
+              <TextField
+                className={styles.textField}
+                name="precioVenta"
+                label="Precio"
+                variant="outlined"
+                type="number"
+                value={itemValue.precioVenta}
+                onChange={(e) => setItemValue({ ...itemValue, precioVenta: parseFloat(e.target.value) })}
+                error={Boolean(errors.precioVenta)}
+                helperText={errors.precioVenta}
+              />
+              <TextField
+                className={styles.textField}
+                name="tiempoEstimadoMinutos"
+                label="Tiempo estimado (minutos)"
+                variant="outlined"
+                type="number"
+                value={itemValue.tiempoEstimadoMinutos}
+                onChange={(e) => setItemValue({ ...itemValue, tiempoEstimadoMinutos: parseInt(e.target.value) })}
+                error={Boolean(errors.tiempoEstimadoMinutos)}
+                helperText={errors.tiempoEstimadoMinutos}
+              />
             </div>
-
-            <div className={styles.ingredientesTableContainer}>
-              {itemValue.ingredientes.length > 0 && (
-                <div className={styles.ingredientesTableContainerItem}>
-                  <TableIngredients
-                    dataIngredients={itemValue.ingredientes}
-                    handleDeleteItem={deleteIngredient}
-                  />
-                </div>
-              )}
-
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-around",
-                  width: "50%",
-                }}
+            <div className={styles.formGroup}>
+              <TextField
+                className={styles.textField}
+                name="descripción"
+                label="Descripción"
+                variant="outlined"
+                multiline
+                rows={4}
+                value={itemValue.descripción}
+                onChange={(e) => setItemValue({ ...itemValue, descripción: e.target.value })}
+                error={Boolean(errors.descripción)}
+                helperText={errors.descripción}
+              />
+              <TextField
+                className={styles.textField}
+                name="receta"
+                label="Receta"
+                variant="outlined"
+                multiline
+                rows={4}
+                value={itemValue.receta}
+                onChange={(e) => setItemValue({ ...itemValue, receta: e.target.value })}
+                error={Boolean(errors.receta)}
+                helperText={errors.receta}
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <Select
+                className={styles.select}
+                name="categoriaInsumo"
+                value={valueInsumos.categoriaInsumo}
+                onChange={handleChangeinsumosCategories}
               >
-                <Button
-                 style={{backgroundColor:"#414141",color:"white" }}
-                variant="contained"  onClick={handleClose}>
-                  Cerrar Modal
-                </Button>
-                <Button
-                style={{backgroundColor:"#a6c732",color:"#FFFFBF" }}
-                  variant="contained"
-                
-                  onClick={handleConfirmModal}
-                >
-                  Confirmar
-                </Button>
-              </div>
+                <MenuItem value="Categoria">Categoria</MenuItem>
+                {insumosCategories.map((cat) => (
+                  <MenuItem key={cat.id} value={cat.denominacion}>
+                    {cat.denominacion}
+                  </MenuItem>
+                ))}
+              </Select>
+              <Select
+                className={styles.select}
+                name="ingrediente"
+                value={valueInsumos.ingrediente.id}
+                onChange={handleChangeInsumosValues}
+              >
+                <MenuItem value="0">Ingrediente</MenuItem>
+                {insumosByCategorie.map((ing) => (
+                  <MenuItem key={ing.id} value={ing.id}>
+                    {ing.denominacion}
+                  </MenuItem>
+                ))}
+              </Select>
+              <OutlinedInput
+                className={styles.input}
+                name="cantidad"
+                type="number"
+                value={valueInsumos.cantidad}
+                onChange={handleAmountInsumoValue}
+                endAdornment={<InputAdornment position="end">Cantidad</InputAdornment>}
+              />
+              <Button variant="contained" onClick={handleNewIngredient}>
+                Agregar Ingrediente
+              </Button>
             </div>
-          </div>
+            <TableIngredients
+              dataIngredients={itemValue.ingredientes}
+              handleDeleteItem={deleteIngredient}
+            />
+            <Button className={styles.submitButton} type="submit" variant="contained" color="primary">
+              Guardar
+            </Button>
+          </form>
         </div>
       </Modal>
+
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <DialogTitle>{"Eliminar ingrediente"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>¿Está seguro de que desea eliminar este ingrediente?</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogOpen(false)} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={handleDeleteIngredient} color="primary" autoFocus>
+            Eliminar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
