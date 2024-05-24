@@ -29,10 +29,11 @@ export abstract class BackendClient<T> extends AbstractBackendClient<T> {
       body: JSON.stringify(data),
     });
     const newData = await response.json();
+    newData.id = newData.id.toString();
     return newData as T;
   }
 
-  async put(id: number | string, data: T): Promise<T> {
+  async put(id: string, data: T): Promise<T> {
     const response = await fetch(`${this.baseUrl}/${id}`, {
       method: "PUT",
       headers: {

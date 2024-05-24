@@ -1,7 +1,8 @@
 
+// ITableIngredients.ts
 import { IInsumo } from "../types/IInsumo";
 
 export interface ITableIngredients {
-  rows: IInsumo[];
-  handleDelete: (index: number) => void;
+  dataIngredients: IInsumo[];
+  handleDeleteItem: (indice: number) => void;
 }

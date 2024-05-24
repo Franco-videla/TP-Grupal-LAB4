@@ -18,7 +18,7 @@ const initialValues: IProductoManufacturado = {
   id: "0",
   alta: true,
   categoria: {
-    id: "0",
+    id: 0,
     denominacion: "Seleccione una categoria",
     categorias_hijas: null,
   },

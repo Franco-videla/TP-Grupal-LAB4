@@ -3,12 +3,12 @@ import { categorias } from "./Icategorias";
 
 export interface IProductoManufacturado {
   id: string;
-  descripción: string;
   alta: boolean;
-  receta: string;
-  tiempoEstimadoMinutos: number;
-  precioVenta: number;
-  denominacion: string;
-  ingredientes: IInsumo[];
   categoria: categorias;
+  denominacion: string;
+  precioVenta: number;
+  tiempoEstimadoMinutos: number;
+  descripción: string;
+  receta: string;
+  ingredientes: IInsumo[];
 }

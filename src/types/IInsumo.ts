@@ -1,9 +1,9 @@
 import { categorias } from "./Icategorias";
-import { IUnidadaMedida } from "./IUnidadMedida";
+import { IUnidadMedida } from "./IUnidadMedida";
 export interface IInsumo {
-  id: string;
+  id: number; // O cambia a number si es necesario
   denominacion: string;
-  unidadMedida: IUnidadaMedida;
+  unidadMedida: IUnidadMedida;
   categoria: categorias;
-  cantidad?: number;
+  cantidad: number;
 }

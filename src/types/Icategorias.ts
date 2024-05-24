@@ -1,5 +1,5 @@
 export interface categorias {
-  id: string;
+  id: number;
   denominacion: string;
   categorias_hijas: categorias[] | null;
 }

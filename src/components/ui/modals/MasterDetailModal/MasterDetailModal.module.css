@@ -1,16 +1,16 @@
 .modalContainer {
   width: 100vw;
   z-index: 200;
-  height: 90vh;
+  height: 90vh; /* Reducir la altura */
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: Helvetica, sans-serif;
+  font-family: 'Helvetica', sans-serif;
 }
 
 .modalContainerContent {
-  width: 80vw;
-  height: 85vh;
+  width: 80vw; /* Reducir el ancho */
+  height: 85vh; /* Reducir la altura */
   overflow-y: auto;
   border-radius: 3rem;
   background-color: #e0ebc2;
@@ -18,6 +18,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  padding: 2rem;
 }
 
 .productContainer {
@@ -42,31 +43,23 @@
   width: 100%;
 }
 
-.productContainerRowLabel {
+.productContainerRow > label {
   flex: 1;
   display: flex;
   flex-direction: column;
-  font-weight: bold;
+  font-weight: bold; /* Etiquetas en negrita */
 }
 
-.descriptionContainer {
-  width: 100%;
-  margin-top: 1rem;
-}
-
-.descriptionContainerLabel {
-  width: 100%;
-  font-weight: bold;
-}
-
+.descriptionContainer,
 .recipeContainer {
   width: 100%;
   margin-top: 1rem;
 }
 
-.recipeContainerLabel {
+.descriptionContainer > label,
+.recipeContainer > label {
   width: 100%;
-  font-weight: bold;
+  font-weight: bold; /* Etiquetas en negrita */
 }
 
 .ingredientesTableContainer {
